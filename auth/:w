@@ -1,0 +1,38 @@
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import { View } from 'react-native';
+import Header from './components/common/Header';
+import Login from './components/Login';
+
+class App extends Component {
+  state = { loggedIn: false }
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyC4QSJPJl7gQQp-iw5n7mV4K2mitWRj038',
+      authDomain: 'auth-d7669.firebaseapp.com',
+      databaseURL: 'https://auth-d7669.firebaseio.com',
+      projectId: 'auth-d7669',
+      storageBucket: 'auth-d7669.appspot.com',
+      messagingSenderId: '999327425988'
+    });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.state({loggedIn: true })
+      } else {
+        this.state({loggedIn: false})
+      }
+    })
+  }
+
+  render() {
+    return (
+      <View>
+        <Header headerText="Authentication" />
+        <Login />
+      </View>
+    );
+  }
+}
+
+export default App;
